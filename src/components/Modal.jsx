@@ -1,4 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const Modal = forwardRef(function Modal({ content, actions }, ref) {
   const dialog = useRef();
@@ -11,13 +12,14 @@ const Modal = forwardRef(function Modal({ content, actions }, ref) {
     };
   });
 
-  return (
+  return createPortal(
     <dialog ref={dialog} className="modal">
       {content}
       <form method="dialog" className="modal-actions">
         {actions}
       </form>
-    </dialog>
+    </dialog>,
+    document.getElementById("modal")
   );
 });
 
