@@ -6,7 +6,7 @@ import Cart from "./Cart";
 export default function Header({ cartItemsCount }) {
   const cartModal = useRef();
   function handleOpenCartClick() {
-    cartModal.current.showModal();
+    cartModal.current.open();
   }
 
   const modalCartActions = (
