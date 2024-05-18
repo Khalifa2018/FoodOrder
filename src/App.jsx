@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import AvailableProducts from "./components/AvailableProducts";
 import Header from "./components/Header";
+import CartContextProvider, { CartContext } from "./meal-cart-context";
 
 function App() {
   return (
     <>
-      <Header cartItemsCount={3} />
-      <AvailableProducts />
+      <CartContextProvider>
+        <Header/>
+        <AvailableProducts />
+      </CartContextProvider>
     </>
   );
 }

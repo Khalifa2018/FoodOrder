@@ -1,10 +1,13 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import logoUrl from "../assets/logo.jpg";
 import Modal from "./Modal";
 import Cart from "./Cart";
 import CheckOut from "./CheckOut";
+import { CartContext } from "../meal-cart-context";
 
-export default function Header({ cartItemsCount }) {
+export default function Header() {
+  const { items } = useContext(CartContext);
+
   const cartModal = useRef();
   const checkOutModal = useRef();
 
@@ -31,7 +34,11 @@ export default function Header({ cartItemsCount }) {
   return (
     <>
       <Modal ref={cartModal} content={cart} actions={modalCartActions} />
-      <Modal ref={checkOutModal} content={checkOut} actions={modalCartActions} />
+      <Modal
+        ref={checkOutModal}
+        content={checkOut}
+        actions={modalCartActions}
+      />
 
       <header id="main-header">
         <div id="title">
@@ -40,7 +47,7 @@ export default function Header({ cartItemsCount }) {
         </div>
         <p>
           <button className="text-button" onClick={handleOpenCartClick}>
-            Cart ({cartItemsCount})
+            Cart ({items.length})
           </button>
         </p>
       </header>
