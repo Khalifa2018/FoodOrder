@@ -1,6 +1,21 @@
+import { useContext } from "react";
+import { CartContext } from "../meal-cart-context";
+import { submitOrder } from "../http.js";
+
 export default function CheckOut() {
-  function handleSubmit(event) {
+  const { items } = useContext(CartContext);
+
+  async function handleSubmit(event) {
     event.preventDefault();
+
+    console.log("submitted");
+
+    const fd = new FormData(event.target);
+    const data = Object.fromEntries(fd.entries());
+
+    const response = await submitOrder({items: items, customer: data});
+
+    console.log(response);
   }
 
   return (
@@ -11,7 +26,7 @@ export default function CheckOut() {
       <div className="control-row">
         <div className="control">
           <label>Full Name</label>
-          <input type="text" id="full-name" name="full-name" />
+          <input type="text" id="name" name="name" />
         </div>
       </div>
 
@@ -40,6 +55,16 @@ export default function CheckOut() {
         </div>
       </div>
 
+      <div className="control-row">
+        <div className="control">
+          <button className="text-button">Close</button>
+        </div>
+        <div className="control">
+          <button type="submit" className="button">
+            SubmitOrder
+          </button>
+        </div>
+      </div>
     </form>
   );
 }

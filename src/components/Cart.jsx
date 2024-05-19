@@ -3,6 +3,12 @@ import { CartContext } from "../meal-cart-context";
 
 export default function Cart() {
   const { items, updateCartItemQuantity } = useContext(CartContext);
+
+  const totalPrice = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
   return (
     <div className="cart">
       <h2>Your Cart</h2>
@@ -24,7 +30,7 @@ export default function Cart() {
           </li>
         ))}
       </ul>
-      <p className="cart-total">$500</p>
+      <p className="cart-total">${totalPrice}</p>
     </div>
   );
 }

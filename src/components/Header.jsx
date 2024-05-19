@@ -37,7 +37,6 @@ export default function Header() {
       <Modal
         ref={checkOutModal}
         content={checkOut}
-        actions={modalCartActions}
       />
 
       <header id="main-header">
