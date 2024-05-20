@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CartContext } from "../meal-cart-context";
+import { CartContext } from "../store/meal-cart-context.jsx";
 import { submitOrder } from "../http.js";
 
 export default function CheckOut() {
