@@ -1,6 +1,5 @@
-import { useContext } from "react";
-import AvailableProducts from "./components/AvailableProducts";
 import Header from "./components/Header";
+import Meals from "./components/Meals";
 import CartContextProvider, { CartContext } from "./store/meal-cart-context";
 
 function App() {
@@ -8,7 +7,7 @@ function App() {
     <>
       <CartContextProvider>
         <Header/>
-        <AvailableProducts />
+        <Meals />
       </CartContextProvider>
     </>
   );

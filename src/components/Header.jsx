@@ -4,6 +4,7 @@ import Modal from "./Modal";
 import Cart from "./Cart";
 import CheckOut from "./CheckOut";
 import { CartContext } from "../store/meal-cart-context";
+import Button from "./UI/Button";
 
 export default function Header() {
   const { items } = useContext(CartContext);
@@ -34,21 +35,18 @@ export default function Header() {
   return (
     <>
       <Modal ref={cartModal} content={cart} actions={modalCartActions} />
-      <Modal
-        ref={checkOutModal}
-        content={checkOut}
-      />
+      <Modal ref={checkOutModal} content={checkOut} />
 
       <header id="main-header">
         <div id="title">
-          <img src={logoUrl} alt="FoodLogo" />
+          <img src={logoUrl} alt="A restaurant" />
           <h1>REACTFOOD</h1>
         </div>
-        <p>
-          <button className="text-button" onClick={handleOpenCartClick}>
+        <nav>
+          <Button textOnly onClick={handleOpenCartClick}>
             Cart ({items.length})
-          </button>
-        </p>
+          </Button>
+        </nav>
       </header>
     </>
   );

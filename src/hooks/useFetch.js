@@ -6,7 +6,6 @@ export function useFetch(fetchFn, initialValue) {
   const [fetchedData, setFetchedData] = useState(initialValue);
 
   useEffect(() => {
-
     console.log("start to fetch");
 
     async function fetchData() {
@@ -27,7 +26,6 @@ export function useFetch(fetchFn, initialValue) {
   return {
     isFetching,
     fetchedData,
-    setFetchedData,
     error,
   };
 }

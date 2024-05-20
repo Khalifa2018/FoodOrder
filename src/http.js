@@ -1,7 +1,7 @@
-export async function fetchAvailableMeals() {
+export async function fetchMeals() {
   const response = await fetch("http://localhost:3000/meals");
-  const resData = await response.json();
-  return resData;
+  const meals = await response.json();
+  return meals;
 }
 
 export async function submitOrder(order) {
