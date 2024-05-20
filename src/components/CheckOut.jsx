@@ -57,7 +57,7 @@ export default function CheckOut() {
 
       <div className="control-row">
         <div className="control">
-          <button className="text-button">Close</button>
+          <button type="button" className="text-button">Close</button>
         </div>
         <div className="control">
           <button type="submit" className="button">
