@@ -3,7 +3,7 @@ import logoUrl from "../assets/logo.jpg";
 import Modal from "./Modal";
 import Cart from "./Cart";
 import CheckOut from "./CheckOut";
-import { CartContext } from "../store/meal-cart-context";
+import { CartContext } from "../store/CartContext";
 import Button from "./UI/Button";
 
 export default function Header() {

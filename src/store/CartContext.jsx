@@ -6,30 +6,23 @@ export const CartContext = createContext({
   updateCartItemQuantity: () => {},
 });
 
-function mealCartReducer(state, action) {
+function cartReducer(state, action) {
   if (action.type === "ADD_ITEM") {
-    const updatedItems = [...state.items];
-
-    const { id, name, price } = action.payload;
-
-    const existingCartIndex = updatedItems.findIndex(
-      (cartItem) => cartItem.id === id
+    const existingCartItemIndex = state.items.findIndex(
+      (cartItem) => cartItem.id === action.item.id
     );
 
-    const existingCartMeal = updatedItems[existingCartIndex];
-    if (existingCartMeal) {
-      const updateMeal = {
-        ...existingCartMeal,
-        quantity: existingCartMeal.quantity + 1,
+    const updatedItems = [...state.items];
+
+    if (existingCartItemIndex > -1) {
+      const existingItem = state.items[existingCartItemIndex];
+      const updatedItem = {
+        ...existingItem,
+        quantity: existingItem.quantity + 1,
       };
-      updatedItems[existingCartIndex] = updateMeal;
+      updatedItems[existingCartItemIndex] = updatedItem;
     } else {
-      updatedItems.push({
-        id,
-        name,
-        price,
-        quantity: 1,
-      });
+      updatedItems.push({ ...action.item, quantity: 1 });
     }
 
     return {
@@ -64,14 +57,14 @@ function mealCartReducer(state, action) {
 }
 
 export default function CartContextProvider({ children }) {
-  const [mealCartState, mealCartDispatch] = useReducer(mealCartReducer, {
+  const [mealCartState, mealCartDispatch] = useReducer(cartReducer, {
     items: [],
   });
 
-  function handleAddItemToCart(id) {
+  function handleAddItemToCart(item) {
     mealCartDispatch({
       type: "ADD_ITEM",
-      payload: id,
+      item,
     });
   }
 
