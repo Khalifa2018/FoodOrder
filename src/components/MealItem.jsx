@@ -4,7 +4,11 @@ import { currencyFormatter } from "../util/formatting";
 import Button from "./UI/Button";
 
 export function MealItem({ meal }) {
-  const { addItemToCart } = useContext(CartContext);
+  const cartCtx = useContext(CartContext);
+
+  function handleAddMealToCart() {
+    cartCtx.addItem(meal);
+  }
 
   return (
     <li className="meal-item">
@@ -18,7 +22,7 @@ export function MealItem({ meal }) {
           <p className="meal-item-description">{meal.description}</p>
         </div>
         <p className="meal-item-actions">
-          <Button onClick={() => addItemToCart(meal)}>Add to Cart</Button>
+          <Button onClick={() => handleAddMealToCart(meal)}>Add to Cart</Button>
         </p>
       </article>
     </li>

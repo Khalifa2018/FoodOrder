@@ -7,7 +7,14 @@ import { CartContext } from "../store/CartContext";
 import Button from "./UI/Button";
 
 export default function Header() {
-  const { items } = useContext(CartContext);
+  const cartContext = useContext(CartContext);
+
+  const totalCartItems = cartContext.items.reduce(
+    (totalNumberOfItems, item) => {
+      return totalNumberOfItems + item.quantity;
+    },
+    0
+  );
 
   const cartModal = useRef();
   const checkOutModal = useRef();
@@ -44,7 +51,7 @@ export default function Header() {
         </div>
         <nav>
           <Button textOnly onClick={handleOpenCartClick}>
-            Cart ({items.length})
+            Cart ({totalCartItems})
           </Button>
         </nav>
       </header>
