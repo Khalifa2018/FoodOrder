@@ -57,6 +57,7 @@ function cartReducer(state, action) {
       (item) => item.id === action.id
     );
     const existingCartItem = state.items[existingCartItemIndex];
+    console.log(existingCartItem);
 
     const updatedItems = [...state.items];
 
@@ -67,7 +68,9 @@ function cartReducer(state, action) {
         ...existingCartItem,
         quantity: existingCartItem.quantity - 1,
       };
-      updatedItems[existingCartItem] = updatedItem;
+      console.log(updatedItem);
+
+      updatedItems[existingCartItemIndex] = updatedItem;
     }
 
     return {
