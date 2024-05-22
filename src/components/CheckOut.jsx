@@ -1,9 +1,20 @@
 import { useContext } from "react";
 import { CartContext } from "../store/CartContext.jsx";
 import { submitOrder } from "../http.js";
+import Modal from "./UI/Modal.jsx";
+import Button from "./UI/Button.jsx";
+import { currencyFormatter } from "../util/formatting.js";
+import Input from "./UI/Input.jsx";
+import UserProgressContext from "../store/UserProgressContext.jsx";
 
 export default function CheckOut() {
-  const { items } = useContext(CartContext);
+  const cartContext = useContext(CartContext);
+  const userProgressContext = useContext(UserProgressContext);
+
+  const cartTotal = cartContext.items.reduce(
+    (totalPrice, item) => totalPrice + item.price * item.quantity,
+    0
+  );
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -13,58 +24,41 @@ export default function CheckOut() {
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
 
-    const response = await submitOrder({items: items, customer: data});
+    const response = await submitOrder({
+      items: cartContext.items,
+      customer: data,
+    });
+  }
 
-    console.log(response);
+  function handleClose() {
+    userProgressContext.hideCheckout();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Checkout</h2>
-      <p>Total Amount $89.95</p>
+    <Modal
+      open={userProgressContext.progress === "checkout"}
+      onClose={handleClose}
+    >
+      <form onSubmit={handleSubmit}>
+        <h2>Checkout</h2>
+        <p>Total Amount: {currencyFormatter.format(cartTotal)} </p>
 
-      <div className="control-row">
-        <div className="control">
-          <label>Full Name</label>
-          <input type="text" id="name" name="name" />
-        </div>
-      </div>
+        <Input label="Full Name" type="text" id="name" />
+        <Input label="E-Mail Address" type="email" id="email" />
+        <Input label="Street" type="text" id="street" />
 
-      <div className="control-row">
-        <div className="control">
-          <label>E-Mail Address</label>
-          <input type="email" id="email" name="email" />
+        <div className="control-row">
+          <Input label="Postal Code" type="text" id="postal-code" />
+          <Input label="City" type="text" id="city" />
         </div>
-      </div>
 
-      <div className="control-row">
-        <div className="control">
-          <label>Street</label>
-          <input type="text" id="street" name="street" />
-        </div>
-      </div>
-
-      <div className="control-row">
-        <div className="control">
-          <label>Postal Code</label>
-          <input type="text" id="postal-code" name="postal-code" />
-        </div>
-        <div className="control">
-          <label>City</label>
-          <input type="text" id="city" name="city" />
-        </div>
-      </div>
-
-      <div className="control-row">
-        <div className="control">
-          <button type="button" className="text-button">Close</button>
-        </div>
-        <div className="control">
-          <button type="submit" className="button">
-            SubmitOrder
-          </button>
-        </div>
-      </div>
-    </form>
+        <p className="modal-actions">
+          <Button type="button" textOnly onClick={handleClose}>
+            Close
+          </Button>
+          <Button type="submit">SubmitOrder</Button>
+        </p>
+      </form>
+    </Modal>
   );
 }
