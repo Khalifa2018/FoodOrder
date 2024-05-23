@@ -7,8 +7,7 @@ import { UserProgressContextProvider } from "./store/UserProgressContext";
 
 function App() {
   return (
-    <>
-      <CartContextProvider>
+    <CartContextProvider>
         <UserProgressContextProvider>
           <Header />
           <Meals />
@@ -16,7 +15,6 @@ function App() {
           <CheckOut />
         </UserProgressContextProvider>
       </CartContextProvider>
-    </>
   );
 }
 

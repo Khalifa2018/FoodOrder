@@ -33,30 +33,6 @@ function cartReducer(state, action) {
     };
   }
 
-  if (action.type === "UPDATE_ITEM") {
-    const updatedItems = [...state.items];
-    const updatedItemIndex = updatedItems.findIndex(
-      (item) => item.id === action.payload.mealId
-    );
-
-    const updatedItem = {
-      ...updatedItems[updatedItemIndex],
-    };
-
-    updatedItem.quantity += action.payload.amount;
-
-    if (updatedItem.quantity <= 0) {
-      updatedItems.splice(updatedItemIndex, 1);
-    } else {
-      updatedItems[updatedItemIndex] = updatedItem;
-    }
-
-    return {
-      ...state,
-      items: updatedItems,
-    };
-  }
-
   if (action.type === "REMOVE_ITEM") {
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.id
@@ -108,16 +84,6 @@ export default function CartContextProvider({ children }) {
     });
   }
 
-  function handleUpdateCartItemQuantity(mealId, amount) {
-    dispatchCartAction({
-      type: "UPDATE_ITEM",
-      payload: {
-        mealId,
-        amount,
-      },
-    });
-  }
-
   function clearCart() {
     dispatchCartAction({ type: "CLEAR_CART" });
   }
@@ -126,7 +92,6 @@ export default function CartContextProvider({ children }) {
     items: cartState.items,
     addItem: addItem,
     removeItem: removeItem,
-    updateCartItemQuantity: handleUpdateCartItemQuantity,
     clearCart: clearCart,
   };
 
