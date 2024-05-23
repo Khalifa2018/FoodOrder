@@ -29,15 +29,17 @@ export default function CheckOut() {
     isLoading: isSending,
     error,
     sendRequest,
+    clearData,
   } = useHttp("http://localhost:3000/orders", requestConfig);
 
   function handleClose() {
     userProgressContext.hideCheckout();
   }
 
-  function handleFinish(){
+  function handleFinish() {
     userProgressContext.hideCheckout();
-
+    cartContext.clearCart();
+    clearData();
   }
 
   async function handleSubmit(event) {
@@ -72,16 +74,16 @@ export default function CheckOut() {
     return (
       <Modal
         open={userProgressContext.progress === "checkout"}
-        onClose={handleClose}
+        onClose={handleFinish}
       >
         <h2>Success!</h2>
-        <p>Your order was submitted successfuly.</p>
+        <p>Your order was submitted successfully.</p>
         <p>
           We will get back to you with more details via email within the next
           few minutes.
         </p>
         <p className="modal-actions">
-          <Button onClick={handleClose}>Okay</Button>
+          <Button onClick={handleFinish}>Okay</Button>
         </p>
       </Modal>
     );
